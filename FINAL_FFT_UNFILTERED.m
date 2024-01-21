@@ -1,4 +1,4 @@
-% Create a figure
+
 fig = figure;
 
 % Create a button
@@ -9,8 +9,8 @@ function buttonCallback(~, ~)
     % Create "Stop" button on the same figure
     stopBtn = uicontrol('Style', 'pushbutton', 'String', 'Stop', 'Position', [400, 195, 100, 30], 'Callback', @stopButtonCallback,'BackgroundColor',[0, 0.8, 0]);
 
-    % Your code for Arduino setup and real-time data acquisition
-    arduinoPort = 'COM6'; % Change this to your Arduino port
+  
+    arduinoPort = 'COM6'; 
     arduino = serial(arduinoPort, 'BaudRate', 4800);
     
     % Set up plot
@@ -28,19 +28,19 @@ function buttonCallback(~, ~)
     title('Real-time FFT');
     grid on;
 
-    % Set up serial communication
+   
     fopen(arduino);
 
-    % Set up variables
+   
     bufferSize = 150;
     time = 1:bufferSize;
     data = zeros(1, bufferSize);
 
-    % Characteristics of your sensor and ADC
+    
     sensorVoltageRange = 10;
     adcResolution = 1023;
 
-    % Main loop for real-time data acquisition
+  
     while ishandle(hLine1)
         fprintf(arduino, 'R');
         rawData = fscanf(arduino, '%d');
@@ -61,7 +61,7 @@ function buttonCallback(~, ~)
         
     end
 
-    % Close serial connection
+    
     fclose(arduino);
     delete(arduino);
     clear arduino;
@@ -70,5 +70,5 @@ end
 % Callback function for the "Stop" button
 function stopButtonCallback(~, ~)
     disp('Stop button clicked!');
-    close(gcf); % Close the current figure, which includes the plots
+    close(gcf); 
 end
